@@ -13,10 +13,13 @@
     <p class="error"><?= $error['error'] ?></p>
 <?php endforeach; ?>
 
-<select class="ui-select" name="ui-select">
-    <option value="ООО «Ромашка»">ООО «Ромашка»</option>
-    <option value="ООО «Ромашка 2»">ООО «Ромашка 2»</option>
-</select>
+<div>
+    <?php foreach ($states as $state): ?>
+        <div style="">
+            <?= $state['name'] ?>
+        </div>
+    <?php endforeach; ?>
+</div>
 
 <table class="ui-table">
     <thead>
@@ -31,25 +34,24 @@
     </tr>
     </thead>
     <tbody>
-    <?php
-    foreach ($orders as $order): ?>
+    <?php foreach ($orders as $order): ?>
         <tr>
-            <td><a href="#"><?= $order['name'] ?></a></td>
+            <td><a href="<?= $order['meta']['uuidHref'] ?>" target="_blank"><?= $order['name'] ?></a></td>
             <td><?= date('d.m.Y H:i', strtotime($order['moment'])) ?></td>
-            <td><?= $order['agent']['name'] ?></td>
+            <td>
+                <a href="<?= $order['agent']['meta']['uuidHref'] ?>" target="_blank"><?= $order['agent']['name'] ?></a>
+            </td>
             <td style="text-align: right"><?= number_format($order['sum'] / 100, 2, ',', ' ') ?></td>
             <td>руб</td>
             <td>
-                <select class="" name="">
-                    <option class="" style="background: <?= $order['state']['hexcolor'] ?>">
-                        <?= $order['state']['name'] ?>
-                    </option>
-                </select>
+                <span class="order-status"
+                      style="background: <?= $states[$order['state']['meta']['href']]['hexColor'] ?>">
+                    <?= $states[$order['state']['meta']['href']]['name'] ?>
+                </span>
             </td>
             <td><?= date('d.m.Y H:i', strtotime($order['updated'])) ?></td>
         </tr>
-    <?php
-    endforeach; ?>
+    <?php endforeach; ?>
     </tbody>
 </table>
 

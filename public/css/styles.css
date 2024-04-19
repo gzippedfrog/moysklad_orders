@@ -62,8 +62,10 @@ body {
 }
 
 .order-status {
+    /*position: relative;*/
     color: #fff !important;
     padding: 5px 10px;
     border: none !important;
     border-radius: 2px;
+    /*background: red;*/
 }
