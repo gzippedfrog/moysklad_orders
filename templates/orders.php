@@ -1,4 +1,5 @@
-<?php require('../templates/head.php'); ?>
+<?php
+require('head.php'); ?>
 
 <div class="logout-form-container">
     <div><?= $_SESSION['username'] ?></div>
@@ -12,14 +13,6 @@
 <?php foreach ($errors as $error): ?>
     <p class="error"><?= $error['error'] ?></p>
 <?php endforeach; ?>
-
-<div>
-    <?php foreach ($states as $state): ?>
-        <div style="">
-            <?= $state['name'] ?>
-        </div>
-    <?php endforeach; ?>
-</div>
 
 <table class="ui-table">
     <thead>
@@ -47,6 +40,18 @@
                 <span class="order-status"
                       style="background: <?= $states[$order['state']['meta']['href']]['hexColor'] ?>">
                     <?= $states[$order['state']['meta']['href']]['name'] ?>
+
+                    <div class="state-select">
+                        <?php foreach ($states as $state): ?>
+                            <div class="state-select__option"
+                                 data-id="<?= $state['id'] ?>"
+                                 data-order-id="<?= $order['id'] ?>">
+                                                    <span class="state-select__color-indicator"
+                                                          style="background: <?= $state['hexColor'] ?>"></span>
+                                <?= $state['name'] ?>
+                            </div>
+                        <?php endforeach; ?>
+                    </div>
                 </span>
             </td>
             <td><?= date('d.m.Y H:i', strtotime($order['updated'])) ?></td>
@@ -55,4 +60,36 @@
     </tbody>
 </table>
 
-<?php require('../templates/footer.php'); ?>
+<script>
+    $('.order-status').on("click", function () {
+        let select = $(this).children(".state-select");
+        let newState = (select.css("display") === "none") ? "inline-block" : "none";
+        select.css("display", newState);
+    });
+
+    fetch(
+        "https://api.moysklad.ru/api/remap/1.2/entity/customerorder/30378daa-fcc3-11ee-0a80-0b56001635b6",
+        {
+            method: "PUT",
+            headers: {
+                "Authorization": "Basic YWRtaW5AZG1pdHJ5dHNlcGFldjo2R2Jyb2VLWWl1blZRSA==",
+                "Accept-Encoding": "gzip",
+                "Content-Type": "application/json"
+            },
+            // mode: "no-cors", // no-cors, *cors, same-origin
+            credentials: "include", // include, *same-origin, omit
+            body: JSON.stringify({
+                'name': Date.now()
+            })
+        }
+    ).then(console.log);
+
+    $('.state-select__option').on("click", async function () {
+        console.log("click");
+        const stateId = $(this).data('id');
+        const orderId = $(this).data('order-id');
+
+    });
+</script>
+
+<?php require('footer.php'); ?>

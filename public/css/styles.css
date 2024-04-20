@@ -62,10 +62,44 @@ body {
 }
 
 .order-status {
-    /*position: relative;*/
+    position: relative;
     color: #fff !important;
     padding: 5px 10px;
     border: none !important;
     border-radius: 2px;
+    cursor: pointer;
     /*background: red;*/
+}
+
+.state-select {
+    display: none;
+    /*display: inline-block;*/
+    position: absolute;
+    top: 30px;
+    left: 0;
+    z-index: 9999;
+    background-color: #fff;
+    box-shadow: 0 1px 3px 0 #c8c8c8;
+    border: solid 1px #999999;
+    border-radius: 0;
+    cursor: pointer;
+}
+
+.state-select__option {
+    padding: 5px;
+    display: flex;
+    align-items: center;
+    color: #000;
+}
+
+.state-select__option:hover {
+    color: #fff;
+    background-color: #6896ba;
+}
+
+.state-select__color-indicator {
+    display: inline-block;
+    width: 15px;
+    height: 15px;
+    margin-right: 5px;
 }
