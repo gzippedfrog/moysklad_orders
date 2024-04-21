@@ -35,7 +35,7 @@ require('head.php'); ?>
                 <a href="<?= $order['agent']['meta']['uuidHref'] ?>" target="_blank"><?= $order['agent']['name'] ?></a>
             </td>
             <td style="text-align: right"><?= number_format($order['sum'] / 100, 2, ',', ' ') ?></td>
-            <td>руб</td>
+            <td><?= $order['rate']['currency']['name'] ?></td>
             <td>
                 <span class="order-status"
                       style="background: <?= decToHex($order['state']['color']) ?>">
