@@ -1,45 +1,24 @@
 <?php
 
+require '../ApiClient.php';
+
 session_start();
 
-if (!isset($_SESSION['access_token'])) {
+$token = $_SESSION['access_token'] ?? null;
+
+if (!$token) {
     header('Location: login.php');
     exit;
 }
 
 $params = json_decode(file_get_contents('php://input'), true);
 
-$state_id = $params['stateId'];
-$order_id = $params['orderId'];
+$stateId = $params['stateId'];
+$orderId = $params['orderId'];
 
-$curl_opts = [
-    CURLOPT_RETURNTRANSFER => true,
-    CURLOPT_HTTPHEADER => [
-        'Authorization: Bearer ' . $_SESSION['access_token'],
-        'Accept-Encoding: gzip',
-        'Content-Type: application/json'
-    ],
-    CURLOPT_ENCODING => 'gzip',
-];
+$client = new ApiClient($token);
 
-$ch = curl_init();
-curl_setopt_array($ch, $curl_opts);
+$result = $client->updateOrderState($orderId, $stateId);
 
-curl_setopt($ch, CURLOPT_URL, 'https://api.moysklad.ru/api/remap/1.2/entity/customerorder/metadata/');
-$response = json_decode(curl_exec($ch), true);
-$states = $response['states'] ?? [];
+echo json_encode(['success' => isset($result['id'])]);
 
-$states = array_filter($states, fn($state) => $state['id'] == $state_id);
-$new_state = array_values($states)[0] ?? null;
-$url = 'https://api.moysklad.ru/api/remap/1.2/entity/customerorder/' . $order_id;
-
-curl_setopt_array($ch, [
-    CURLOPT_URL => $url,
-    CURLOPT_CUSTOMREQUEST => 'PUT',
-    CURLOPT_POSTFIELDS => json_encode([
-        'state' => ['meta' => $new_state['meta']]
-    ])
-]);
-$response = json_decode(curl_exec($ch), true);
-
-echo json_encode(['success' => true]);

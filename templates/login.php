@@ -1,4 +1,9 @@
-<?php require('head.php'); ?>
+<?php
+require('head.php');
+/** @var string $login */
+/** @var string $password */
+/** @var string $error_class */
+?>
 
     <div class="login-form-container">
         <form class="login-form" method="POST">
@@ -12,8 +17,8 @@
                     type="password" id="password" name="password"
                     value="<?= $password ?>" required>
 
-            <?php if (isset($response['errors'])): ?>
-                <?php foreach ($response['errors'] as $error): ?>
+            <?php if (isset($errors)): ?>
+                <?php foreach ($errors as $error): ?>
                     <p class="error"><?= $error['error'] ?></p>
                 <?php endforeach ?>
             <?php endif ?>

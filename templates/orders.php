@@ -1,4 +1,8 @@
 <?php
+
+/** @var array $orders */
+/** @var array $states */
+
 require('head.php'); ?>
 
 <div class="logout-form-container">
@@ -9,10 +13,6 @@ require('head.php'); ?>
         </form>
     </div>
 </div>
-
-<?php foreach ($errors as $error): ?>
-    <p class="error"><?= $error['error'] ?></p>
-<?php endforeach; ?>
 
 <table class="ui-table">
     <thead>
@@ -38,14 +38,14 @@ require('head.php'); ?>
             <td><?= $order['rate']['currency']['name'] ?></td>
             <td>
                 <span class="order-status"
-                      style="background: <?= decToHex($order['state']['color']) ?>">
+                      style="background: <?= '#' . str_pad(dechex($order['state']['color']), 6, '0', STR_PAD_LEFT); ?>">
                     <?= $order['state']['name'] ?>
 
                     <div class="state-select">
                         <?php foreach ($states as $state): ?>
                             <div class="state-select__option" data-state-id="<?= $state['id'] ?>">
                                                     <span class="state-select__color-indicator"
-                                                          style="background: <?= decToHex($state['color']) ?>"></span>
+                                                          style="background: <?= '#' . str_pad(dechex($state['color']), 6, '0', STR_PAD_LEFT); ?>"></span>
                                 <?= $state['name'] ?>
                             </div>
                         <?php endforeach; ?>
@@ -69,13 +69,10 @@ require('head.php'); ?>
         const orderId = $(this).closest('tr').data('order-id');
         const stateId = $(this).data('state-id');
 
-        fetch(
-            "update_order_status.php",
-            {
-                method: "PUT",
-                body: JSON.stringify({orderId, stateId})
-            }
-        )
+        fetch("update_order_status.php", {
+            method: "PUT",
+            body: JSON.stringify({orderId, stateId})
+        })
             .then(res => res.json())
             .then((data) => {
                 if (data.success) {
