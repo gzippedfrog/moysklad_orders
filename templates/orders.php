@@ -28,7 +28,7 @@ require('head.php'); ?>
     </thead>
     <tbody>
     <?php foreach ($orders as $order): ?>
-        <tr>
+        <tr data-order-id="<?= $order['id'] ?>">
             <td><a href="<?= $order['meta']['uuidHref'] ?>" target="_blank"><?= $order['name'] ?></a></td>
             <td><?= date('d.m.Y H:i', strtotime($order['moment'])) ?></td>
             <td>
@@ -38,16 +38,14 @@ require('head.php'); ?>
             <td>руб</td>
             <td>
                 <span class="order-status"
-                      style="background: <?= $states[$order['state']['meta']['href']]['hexColor'] ?>">
-                    <?= $states[$order['state']['meta']['href']]['name'] ?>
+                      style="background: <?= decToHex($order['state']['color']) ?>">
+                    <?= $order['state']['name'] ?>
 
                     <div class="state-select">
                         <?php foreach ($states as $state): ?>
-                            <div class="state-select__option"
-                                 data-id="<?= $state['id'] ?>"
-                                 data-order-id="<?= $order['id'] ?>">
+                            <div class="state-select__option" data-state-id="<?= $state['id'] ?>">
                                                     <span class="state-select__color-indicator"
-                                                          style="background: <?= $state['hexColor'] ?>"></span>
+                                                          style="background: <?= decToHex($state['color']) ?>"></span>
                                 <?= $state['name'] ?>
                             </div>
                         <?php endforeach; ?>
@@ -62,33 +60,28 @@ require('head.php'); ?>
 
 <script>
     $('.order-status').on("click", function () {
-        let select = $(this).children(".state-select");
-        let newState = (select.css("display") === "none") ? "inline-block" : "none";
+        const select = $(this).children(".state-select");
+        const newState = (select.css("display") === "none") ? "inline-block" : "none";
         select.css("display", newState);
     });
 
-    fetch(
-        "https://api.moysklad.ru/api/remap/1.2/entity/customerorder/30378daa-fcc3-11ee-0a80-0b56001635b6",
-        {
-            method: "PUT",
-            headers: {
-                "Authorization": "Basic YWRtaW5AZG1pdHJ5dHNlcGFldjo2R2Jyb2VLWWl1blZRSA==",
-                "Accept-Encoding": "gzip",
-                "Content-Type": "application/json"
-            },
-            // mode: "no-cors", // no-cors, *cors, same-origin
-            credentials: "include", // include, *same-origin, omit
-            body: JSON.stringify({
-                'name': Date.now()
-            })
-        }
-    ).then(console.log);
+    $('.state-select__option').on("click", function () {
+        const orderId = $(this).closest('tr').data('order-id');
+        const stateId = $(this).data('state-id');
 
-    $('.state-select__option').on("click", async function () {
-        console.log("click");
-        const stateId = $(this).data('id');
-        const orderId = $(this).data('order-id');
-
+        fetch(
+            "update_order_status.php",
+            {
+                method: "PUT",
+                body: JSON.stringify({orderId, stateId})
+            }
+        )
+            .then(res => res.json())
+            .then((data) => {
+                if (data.success) {
+                    window.location.reload();
+                }
+            });
     });
 </script>
 

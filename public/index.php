@@ -18,34 +18,32 @@ $curl_opts = [
     CURLOPT_ENCODING => 'gzip',
 ];
 
-//$ch = curl_init();
-//curl_setopt_array($ch, $curl_opts);
-//
-//curl_setopt($ch, CURLOPT_URL, 'https://api.moysklad.ru/api/remap/1.2/entity/customerorder');
-//$response = json_decode(curl_exec($ch), true);
-//$orders = $response['rows'] ?? [];
-//
-//curl_setopt($ch, CURLOPT_URL, 'https://api.moysklad.ru/api/remap/1.2/entity/customerorder/metadata');
-//$response = json_decode(curl_exec($ch), true);
-//$states = $response['states'] ?? [];
+$ch = curl_init();
+curl_setopt_array($ch, $curl_opts);
 
-$orders = json_decode(file_get_contents('../orders.json'), true);
-$states = json_decode(file_get_contents('../states.json'), true);
+curl_setopt($ch, CURLOPT_URL, 'https://api.moysklad.ru/api/remap/1.2/entity/customerorder?order=moment,desc&limit=100&expand=agent,state');
+$response = json_decode(curl_exec($ch), true);
+$orders = $response['rows'] ?? [];
 
-usort($orders, fn($a, $b) => strtotime($b['moment']) - strtotime($a['moment']));
+//header('Content-Type: application/json');
+//echo json_encode($orders[0]['state']);
+//exit;
 
-foreach ($states as $i => $state) {
-    $states[$i]['hexColor'] = '#' . str_pad(dechex($state['color']), 6, '0', STR_PAD_LEFT);
-}
+curl_setopt($ch, CURLOPT_URL, 'https://api.moysklad.ru/api/remap/1.2/entity/customerorder/metadata');
+$response = json_decode(curl_exec($ch), true);
+$states = $response['states'] ?? [];
 
-$states = array_combine(array_map(fn($s) => $s['meta']['href'], $states), $states);
-
-//foreach ($orders as $i => $order) {
-//    curl_setopt($ch, CURLOPT_URL, $order['agent']['meta']['href']);
-//    $orders[$i]['agent'] = json_decode(curl_exec($ch), true);
-//}
+//$states = array_combine(array_map(fn($s) => $s['meta']['href'], $states), $states);
 
 //file_put_contents('../orders.json', json_encode($orders, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT));
 //file_put_contents('../states.json', json_encode($states, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT));
+
+//$orders = json_decode(file_get_contents('../orders.json'), true);
+//$states = json_decode(file_get_contents('../states.json'), true);
+
+function decToHex($color)
+{
+    return '#' . str_pad(dechex($color), 6, '0', STR_PAD_LEFT);
+}
 
 require('../templates/orders.php');

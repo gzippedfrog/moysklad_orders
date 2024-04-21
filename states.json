@@ -1,5 +1,5 @@
-[
-    {
+{
+    "https://api.moysklad.ru/api/remap/1.2/entity/customerorder/metadata/states/98930bac-fcc1-11ee-0a80-011e001620dd": {
         "meta": {
             "href": "https://api.moysklad.ru/api/remap/1.2/entity/customerorder/metadata/states/98930bac-fcc1-11ee-0a80-011e001620dd",
             "metadataHref": "https://api.moysklad.ru/api/remap/1.2/entity/customerorder/metadata",
@@ -13,7 +13,7 @@
         "stateType": "Regular",
         "entityType": "customerorder"
     },
-    {
+    "https://api.moysklad.ru/api/remap/1.2/entity/customerorder/metadata/states/98930c9d-fcc1-11ee-0a80-011e001620de": {
         "meta": {
             "href": "https://api.moysklad.ru/api/remap/1.2/entity/customerorder/metadata/states/98930c9d-fcc1-11ee-0a80-011e001620de",
             "metadataHref": "https://api.moysklad.ru/api/remap/1.2/entity/customerorder/metadata",
@@ -27,7 +27,7 @@
         "stateType": "Regular",
         "entityType": "customerorder"
     },
-    {
+    "https://api.moysklad.ru/api/remap/1.2/entity/customerorder/metadata/states/98930cf3-fcc1-11ee-0a80-011e001620df": {
         "meta": {
             "href": "https://api.moysklad.ru/api/remap/1.2/entity/customerorder/metadata/states/98930cf3-fcc1-11ee-0a80-011e001620df",
             "metadataHref": "https://api.moysklad.ru/api/remap/1.2/entity/customerorder/metadata",
@@ -41,7 +41,7 @@
         "stateType": "Regular",
         "entityType": "customerorder"
     },
-    {
+    "https://api.moysklad.ru/api/remap/1.2/entity/customerorder/metadata/states/98930d45-fcc1-11ee-0a80-011e001620e0": {
         "meta": {
             "href": "https://api.moysklad.ru/api/remap/1.2/entity/customerorder/metadata/states/98930d45-fcc1-11ee-0a80-011e001620e0",
             "metadataHref": "https://api.moysklad.ru/api/remap/1.2/entity/customerorder/metadata",
@@ -55,7 +55,7 @@
         "stateType": "Regular",
         "entityType": "customerorder"
     },
-    {
+    "https://api.moysklad.ru/api/remap/1.2/entity/customerorder/metadata/states/98930da2-fcc1-11ee-0a80-011e001620e1": {
         "meta": {
             "href": "https://api.moysklad.ru/api/remap/1.2/entity/customerorder/metadata/states/98930da2-fcc1-11ee-0a80-011e001620e1",
             "metadataHref": "https://api.moysklad.ru/api/remap/1.2/entity/customerorder/metadata",
@@ -69,7 +69,7 @@
         "stateType": "Successful",
         "entityType": "customerorder"
     },
-    {
+    "https://api.moysklad.ru/api/remap/1.2/entity/customerorder/metadata/states/98930df6-fcc1-11ee-0a80-011e001620e2": {
         "meta": {
             "href": "https://api.moysklad.ru/api/remap/1.2/entity/customerorder/metadata/states/98930df6-fcc1-11ee-0a80-011e001620e2",
             "metadataHref": "https://api.moysklad.ru/api/remap/1.2/entity/customerorder/metadata",
@@ -83,7 +83,7 @@
         "stateType": "Unsuccessful",
         "entityType": "customerorder"
     },
-    {
+    "https://api.moysklad.ru/api/remap/1.2/entity/customerorder/metadata/states/98930e44-fcc1-11ee-0a80-011e001620e3": {
         "meta": {
             "href": "https://api.moysklad.ru/api/remap/1.2/entity/customerorder/metadata/states/98930e44-fcc1-11ee-0a80-011e001620e3",
             "metadataHref": "https://api.moysklad.ru/api/remap/1.2/entity/customerorder/metadata",
@@ -97,4 +97,4 @@
         "stateType": "Unsuccessful",
         "entityType": "customerorder"
     }
-]
+}
